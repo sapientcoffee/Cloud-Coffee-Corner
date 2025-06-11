@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# --- Configuration ---
+REGISTRY_SCOPE="@gemini-cli"
+REGISTRY_URL="https://us-west1-npm.pkg.dev/gemini-code-dev/gemini-code/"
+# Define the key for the config we want to check and fix.
+DEPRECATED_CONFIG_KEY="//us-west1-npm.pkg.dev/gemini-code-dev/gemini-code/:always-auth"
+
+# --- Colors for Logging ---
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
+
+# --- Banner ---
+# Adjusted spacing to account for 2-character-width emojis.
+echo -e ""
+echo -e "${BLUE}╔══════════════════════════════════╗${NC}"
+echo -e "${BLUE}║    🚀 Gemini CLI Launcher 🚀     ║${NC}"
+echo -e "${BLUE}╚══════════════════════════════════╝${NC}\n"
+
+# --- Main Script ---
+
+# 1. Configure npm registry for @gemini-cli if not already set.
+echo -e "🔧 Checking npm registry configuration for ${REGISTRY_SCOPE}..."
+CURRENT_REGISTRY=$(npm config get "${REGISTRY_SCOPE}:registry")
+if [ "$CURRENT_REGISTRY" != "$REGISTRY_URL" ]; then
+  echo -e "${YELLOW}Setting npm registry for ${REGISTRY_SCOPE}...${NC}"
+  npm config set "${REGISTRY_SCOPE}:registry" "$REGISTRY_URL"
+  echo -e "${GREEN}✅ Registry configured.${NC}"
+else
+  echo -e "${GREEN}✅ Registry already configured.${NC}"
+fi
+
+# 2. Check for and remove deprecated 'always-auth' setting to prevent warnings.
+if npm config get "$DEPRECATED_CONFIG_KEY" &>/dev/null; then
+  echo -e "${YELLOW}🧹 Found and removing deprecated 'always-auth' from npm config...${NC}"
+  npm config delete "$DEPRECATED_CONFIG_KEY"
+fi
+
+# 3. Check GCloud authentication.
+echo -e "🔍 Checking gcloud authentication..."
+if ! gcloud auth list --filter=status:ACTIVE --format="value(account)" | grep -q '.'; then
+  echo -e "${YELLOW}🔑 Not authenticated with gcloud. Running 'gcloud auth login'...${NC}"
+  gcloud auth login
+else
+  echo -e "${GREEN}✅ Already authenticated with gcloud.${NC}"
+fi
+
+# 4. Authenticate with Google Artifact Registry for npm.
+echo -e "🔐 Authenticating with Google Artifact Registry for npm..."
+# Hide the default output of this command to keep our logs clean.
+npx google-artifactregistry-auth \
+  --repo-config=$HOME/.npmrc \
+  --credential-config=$HOME/.npmrc > /dev/null 2>&1
+echo -e "${GREEN}✅ npm authentication refreshed.${NC}"
+
+
+# 5. Announce the launch in a dedicated box.
+echo -e "\n${BLUE}┌──────────────────────────────────────────────────────────────┐${NC}"
+if [ "$#" -gt 0 ]; then
+  echo -e "${BLUE}│ 🚀 Launching with arguments: ${GREEN}$@${NC}"
+else
+  echo -e "${BLUE}│ 🚀 Launching @gemini-cli/cli...${NC}"
+fi
+echo -e "${BLUE}└──────────────────────────────────────────────────────────────┘${NC}"
+
+# And execute the command. Its output will appear below the box.
+npx --yes @gemini-cli/cli@head "$@"

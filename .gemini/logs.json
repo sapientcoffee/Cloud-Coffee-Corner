@@ -1,0 +1,23 @@
+[
+  {
+    "sessionId": "bbec3be3-090b-4c5f-b54e-3afdadd8419c",
+    "messageId": 0,
+    "type": "user",
+    "message": "this is a new git repo, create a good file/folder structure to be a mono-repo for multiple microserviecs that will have their own independant CI/CD confids, architectural design decisions etc. Think about an over arching documentation structure that will contain all the high-level designs and key considerations for the app.",
+    "timestamp": "2025-06-11T19:32:41.185Z"
+  },
+  {
+    "sessionId": "bbec3be3-090b-4c5f-b54e-3afdadd8419c",
+    "messageId": 1,
+    "type": "user",
+    "message": "ls -lrt",
+    "timestamp": "2025-06-11T19:38:19.407Z"
+  },
+  {
+    "sessionId": "bbec3be3-090b-4c5f-b54e-3afdadd8419c",
+    "messageId": 2,
+    "type": "user",
+    "message": "create a git commit for this and add the prompt used",
+    "timestamp": "2025-06-11T19:39:42.913Z"
+  }
+]
