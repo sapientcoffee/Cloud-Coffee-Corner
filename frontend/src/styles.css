@@ -1,1 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-text: #333333;
+  --secondary-text: #555555;
+  --background-color: #fbfaf8;
+  --header-bg: #ffffff;
+  --header-border: #eeeeee;
+  --primary-accent: #d97706;
+  --card-bg: #ffffff;
+  --card-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  --card-hover-shadow: 0 18px 36px rgba(0,0,0,0.08);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-text);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 3rem;
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+}
+
+.logo a {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--primary-text);
+  font-size: 1.6rem;
+}
+
+.nav a {
+  margin: 0 2rem;
+  text-decoration: none;
+  color: var(--secondary-text);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.user-profile img {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+main {
+  padding: 0;
+}
