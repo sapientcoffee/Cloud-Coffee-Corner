@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { HomepageComponent } from './homepage/homepage.component';
-import { BrewInsightsChatComponent } from './brew-insights-chat/brew-insights-chat.component';
-import { CoffeeMenuComponent } from './coffee-menu/coffee-menu.component';
-import { QuoteOfTheDayComponent } from './quote-of-the-day/quote-of-the-day.component';
-import { SettingsComponent } from './settings/settings.component';
+import { HomepageComponent } from '@app/homepage/homepage.component';
+import { BrewInsightsChatComponent } from '@app/brew-insights-chat/brew-insights-chat.component';
+import { CoffeeMenuComponent } from '@app/coffee-menu/coffee-menu.component';
+import { QuoteOfTheDayComponent } from '@app/quote-of-the-day/quote-of-the-day.component';
+import { SettingsComponent } from '@app/settings/settings.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
